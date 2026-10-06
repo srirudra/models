@@ -1,0 +1,35 @@
+# Example model catalogue (YAML form of models.example.json). Copy to
+# models.yaml and edit, then point RUNPOD_MODELS_FILE at it. JSON is also
+# accepted — the file extension picks the parser. Parsed with yaml.safe_load
+# at boot; unknown keys and invalid values refuse to start the proxy
+# (fail fast). Schema and per-model fields: README "Declarative model
+# catalogue".
+#
+# YAML gotchas: quote any value that contains ": " or "#" (e.g.
+# name: "a: b"), and note that unquoted yes/no/on/off parse as booleans.
+models:
+  - name: Qwen/Qwen3-32B
+    templates:
+      - qwen3-32b-vllm-h100
+      - qwen3-32b-vllm-a100
+    gpus:
+      - id: NVIDIA H100 80GB HBM3
+        min: 1
+        max: 1
+      - id: NVIDIA A100 80GB PCIe
+        min: 1
+        max: 2
+    port: 8000
+    container_disk_gb: 50
+    volume_gb: 100
+    cloud_type: SECURE
+  - name: Qwen/Qwen3.8-27B-FP8
+    templates:
+      - qwen3-8-27b-fp8-vllm
+    gpus:
+      - id: NVIDIA L40S
+    # Optional: suggest specific RunPod datacentre ids for creation (e.g.
+    # US-TX-3). The v2 create API has no priority field, so the order is
+    # informational — RunPod may pick any listed one that has capacity.
+    # datacenters: [US-TX-3, US-KS-3]
+    # datacenter_priority is still accepted but never sent to RunPod.

@@ -1,0 +1,43 @@
+{
+  "_comment": "Starter configuration. Replace the credentialRef placeholder with your own environment variable; do not put secrets in this file.",
+  "schemaVersion": 1,
+  "compatibility": {
+    "testedCliVersions": [
+      "1.0.88",
+      "1.0.89"
+    ],
+    "untestedVersionPolicy": "block-custom-routing"
+  },
+  "providers": {
+    "local": {
+      "protocol": "openai-chat-completions",
+      "baseUrl": "http://localhost:8080/v1/",
+      "credentialRef": "env:CHR_CUSTOM_API_KEY",
+      "timeoutsMs": {
+        "connect": 10000,
+        "firstByte": 120000,
+        "streamIdle": 60000,
+        "total": 900000
+      }
+    }
+  },
+  "models": [],
+  "routing": {
+    "unmatchedGitHubModel": "preserve-original-route",
+    "unknownCustomModel": "error",
+    "crossProviderFallback": "disabled",
+    "auxiliary": {
+      "policy": "block"
+    },
+    "githubLeg": {
+      "mode": "fail-closed"
+    }
+  },
+  "recording": {
+    "defaultMode": "off",
+    "retentionDays": 7,
+    "maxTotalMiB": 1024,
+    "maxBodyMiBPerRequest": 16,
+    "onWriteFailure": "continue-inference-and-alert"
+  }
+}

@@ -1,0 +1,21 @@
+<Project>
+  <!--
+    AgentSkillset build properties.
+    Imported automatically when the package is referenced (build/AgentSkillset.props).
+
+    Set these in your project (before referencing the package) to customize the install:
+      <AgentSkillsetTarget>repo</AgentSkillsetTarget>          user (default) | repo
+      <AgentSkillsetRepoRoot>$(MSBuildProjectDirectory)</AgentSkillsetRepoRoot>
+      <AgentSkillsetAzureDevOpsOrg>https://dev.azure.com/MyOrg</AgentSkillsetAzureDevOpsOrg>
+      <AgentSkillsetIncludeKnowledge>true</AgentSkillsetIncludeKnowledge>
+      <AgentSkillsetExcludeAiTeamOrchestration>true</AgentSkillsetExcludeAiTeamOrchestration>
+      <AgentSkillsetSkipVsCodeSync>true</AgentSkillsetSkipVsCodeSync>
+      <AgentSkillsetSetSubagentSetting>true</AgentSkillsetSetSubagentSetting>
+      <AgentSkillsetForce>true</AgentSkillsetForce>
+      <AgentSkillsetSkipInstall>true</AgentSkillsetSkipInstall>   opt out of the build-time install
+  -->
+  <PropertyGroup>
+    <AgentSkillsetTarget Condition="'$(AgentSkillsetTarget)' == ''">user</AgentSkillsetTarget>
+    <AgentSkillsetSkipInstall Condition="'$(AgentSkillsetSkipInstall)' == ''">false</AgentSkillsetSkipInstall>
+  </PropertyGroup>
+</Project>

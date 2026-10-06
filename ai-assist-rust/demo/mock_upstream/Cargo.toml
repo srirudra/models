@@ -1,0 +1,18 @@
+[package]
+name = "mock-upstream"
+description = "Local mock of a RunPod serverless endpoint for demos and tests"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1.53", features = ["rt-multi-thread", "macros", "signal", "time"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+serde_json = "1"
+async-stream = "0.3"
+futures-core = "0.3"

@@ -1,0 +1,36 @@
+<Project>
+  <!--
+    AgentSkillset build targets.
+    Runs the installer once per machine (marker file) when a project references the package,
+    so the skillset is available in ~/.copilot (or the repo .copilot) after the first build.
+
+    Opt out with:  <AgentSkillsetSkipInstall>true</AgentSkillsetSkipInstall>
+    Re-run manually:  powershell -ExecutionPolicy Bypass -File .\build\install.ps1 -Force
+  -->
+  <PropertyGroup>
+    <AgentSkillsetMarkerDir Condition="'$(AgentSkillsetMarkerDir)' == ''">$(MSBuildThisFileDirectory)..\..\.agent-skillset-installed</AgentSkillsetMarkerDir>
+    <AgentSkillsetMarkerFile>$(AgentSkillsetMarkerDir)\$(AgentSkillsetTarget).done</AgentSkillsetMarkerFile>
+  </PropertyGroup>
+
+  <Target Name="AgentSkillsetInstall"
+          BeforeTargets="Build"
+          Condition="'$(AgentSkillsetSkipInstall)' != 'true' and !Exists('$(AgentSkillsetMarkerFile)')">
+    <PropertyGroup>
+      <_AgentSkillsetArgs>-Target $(AgentSkillsetTarget) -NonInteractive</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetRepoRoot)' != ''">$(_AgentSkillsetArgs) -RepoRoot $(AgentSkillsetRepoRoot)</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetAzureDevOpsOrg)' != ''">$(_AgentSkillsetArgs) -AzureDevOpsOrg $(AgentSkillsetAzureDevOpsOrg)</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetIncludeKnowledge)' == 'true'">$(_AgentSkillsetArgs) -IncludeKnowledge</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetExcludeAiTeamOrchestration)' == 'true'">$(_AgentSkillsetArgs) -ExcludeAiTeamOrchestration</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetSkipVsCodeSync)' == 'true'">$(_AgentSkillsetArgs) -SkipVsCodeSync</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetSetSubagentSetting)' == 'true'">$(_AgentSkillsetArgs) -SetSubagentSetting</_AgentSkillsetArgs>
+      <_AgentSkillsetArgs Condition="'$(AgentSkillsetForce)' == 'true'">$(_AgentSkillsetArgs) -Force</_AgentSkillsetArgs>
+    </PropertyGroup>
+    <MakeDir Directories="$(AgentSkillsetMarkerDir)" />
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)install.ps1&quot; $(_AgentSkillsetArgs)"
+          ContinueOnError="warn"
+          LogStandardErrorAsError="false" />
+    <Touch Files="$(AgentSkillsetMarkerFile)" AlwaysCreate="true" />
+    <Message Importance="high"
+             Text="AgentSkillset installed (target: $(AgentSkillsetTarget)). Re-run manually with build\install.ps1 -Force to refresh." />
+  </Target>
+</Project>

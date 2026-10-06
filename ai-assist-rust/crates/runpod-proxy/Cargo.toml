@@ -1,0 +1,34 @@
+[package]
+name = "runpod-proxy"
+description = "RunPod serverless warm proxy (Rust port of the Python reference)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+anyhow = "1.0"
+arc-swap = "1.7"
+async-trait = "0.1"
+axum = "0.8"
+bytes = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+futures-util = "0.3"
+reqwest = { version = "0.13", default-features = false, features = ["native-tls", "stream", "json", "query"] }
+regex = "1"
+serde = { version = "1.0", features = ["derive"] }
+# preserve_order keeps JSON object key order on re-serialization (parity with
+# Python's ordered dicts when the model field is rewritten in place).
+serde_json = { version = "1.0", features = ["preserve_order"] }
+thiserror = "2"
+tokio = { version = "1.53", features = ["rt-multi-thread", "macros", "net", "time", "signal", "sync", "io-util"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+uuid = { version = "1", features = ["v4"] }
+yaml-rust2 = "0.13"
+
+[dev-dependencies]
+httpmock = "0.7"
+tower = { version = "0.5", features = ["util"] }

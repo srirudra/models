@@ -1,0 +1,14 @@
+# Model catalogue for the proxy (YAML; JSON is also accepted — the file
+# extension picks the parser). Parsed with yaml.safe_load at boot; unknown
+# keys and invalid values refuse to start the proxy (fail fast).
+#
+# YAML gotchas: quote any value that contains ": " or "#", and note that
+# unquoted yes/no/on/off parse as booleans.
+models:
+  - name: Qwen/Qwen3.8-27B-FP8
+    templates:
+      - accepted_bronze_gorilla
+    gpus:
+      - id: NVIDIA L40S
+        min: 1
+        max: 1

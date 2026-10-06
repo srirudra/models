@@ -1,0 +1,24 @@
+services:
+  runpod-proxy:
+    build: .
+    container_name: runpod-proxy
+    env_file:
+      - ${ENV_FILE:-.env}
+    ports:
+      - "8080:8080"
+    # Read-only bind mount for the optional model catalogue (JSON or YAML).
+    # The host source is ${MODELS_FILE}, defaulting to ./models.yaml (the file
+    # the quickstart creates from models.example.yaml); the in-container target
+    # is ${CONTAINER_MODELS_FILE}, defaulting to /app/models.yaml. Keep the
+    # in-container target in sync with RUNPOD_MODELS_FILE in the env file. If
+    # the host file is absent Docker creates a *directory* at the path and the
+    # catalogue load fails loudly at startup — which only matters when
+    # RUNPOD_MODELS_FILE is set, since this mount is inert unless the env file
+    # points RUNPOD_MODELS_FILE at the mounted path.
+    volumes:
+      - ${MODELS_FILE:-./models.yaml}:${CONTAINER_MODELS_FILE:-/app/models.yaml}:ro
+    restart: unless-stopped
+    # Default docker stop timeout is 10s, which cuts long streaming
+    # generations off mid-token on `docker compose down` / image upgrade.
+    # 30s lets in-flight streams and the graceful shutdown path finish.
+    stop_grace_period: 30s

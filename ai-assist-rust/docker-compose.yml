@@ -1,0 +1,20 @@
+services:
+  runpod-proxy:
+    build: .
+    container_name: runpod-proxy
+    env_file:
+      - ${ENV_FILE:-.env}
+    ports:
+      - "8080:8080"
+    # Read-only bind mount for the optional model catalogue (JSON or YAML).
+    # Same contract as the Python compose file: the host source is
+    # ${MODELS_FILE}, defaulting to ./models.yaml; the in-container target is
+    # ${CONTAINER_MODELS_FILE}, defaulting to /app/models.yaml. Keep the
+    # in-container target in sync with RUNPOD_MODELS_FILE in the env file.
+    volumes:
+      - ${MODELS_FILE:-./models.yaml}:${CONTAINER_MODELS_FILE:-/app/models.yaml}:ro
+    restart: unless-stopped
+    # Default docker stop timeout is 10s, which cuts long streaming
+    # generations off mid-token on `docker compose down` / image upgrade.
+    # 30s lets in-flight streams and the graceful shutdown path finish.
+    stop_grace_period: 30s

@@ -1,0 +1,1 @@
+& "C:\Users\vdkapoor\projects\ai-assistant\agent-skillset\build\install.ps1" -Target repo -RepoRoot C:\Users\vdkapoor\AppData\Local\Temp\1\agent-skillset-filetest-385710234 -AzureDevOpsOrg simplevalue -NonInteractive

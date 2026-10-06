@@ -1,0 +1,14 @@
+[workspace]
+resolver = "3"
+members = ["crates/runpod-proxy", "demo/mock_upstream"]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.85"
+version = "0.1.0"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -100 }

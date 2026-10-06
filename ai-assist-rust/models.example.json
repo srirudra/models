@@ -1,0 +1,28 @@
+{
+  "models": [
+    {
+      "name": "Qwen/Qwen3-32B",
+      "templates": [
+        "qwen3-32b-vllm-h100",
+        "qwen3-32b-vllm-a100"
+      ],
+      "gpus": [
+        { "id": "NVIDIA H100 80GB HBM3", "min": 1, "max": 1 },
+        { "id": "NVIDIA A100 80GB PCIe", "min": 1, "max": 2 }
+      ],
+      "port": 8000,
+      "container_disk_gb": 50,
+      "volume_gb": 100,
+      "cloud_type": "SECURE"
+    },
+    {
+      "name": "Qwen/Qwen3.8-27B-FP8",
+      "templates": [
+        "qwen3-8-27b-fp8-vllm"
+      ],
+      "gpus": [
+        { "id": "NVIDIA L40S" }
+      ]
+    }
+  ]
+}

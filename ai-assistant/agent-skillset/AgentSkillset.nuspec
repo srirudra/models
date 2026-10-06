@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>AgentSkillset</id>
+    <version>1.0.0</version>
+    <authors>vdkapoor</authors>
+    <owners>vdkapoor</owners>
+    <title>AgentSkillset - GitHub Copilot Agents, Skills, Instructions &amp; Prompts</title>
+    <description>
+      A portable, installable set of GitHub Copilot customizations: 8 custom agents (Principal Engineer
+      multi-agent delivery team + prompt architect/reviewer), 15 Agent Skills (PBI delivery, prompt
+      engineering, ADR, architecture/security/cloud review, QA, release, runbooks, threat modeling,
+      incident debugging, and more), 7 instruction files, 26 slash prompts, the TEAM_WORKFLOW
+      documentation, and the third-party ai-team-orchestration plugin (MIT).
+
+      Install to your user-level ~/.copilot (default) or a repository's .copilot folder for team
+      sharing. Non-destructive by default; idempotent; uninstallable via manifest.
+
+      Run: powershell -ExecutionPolicy Bypass -File .\build\install.ps1 -List   (preview)
+      See the README for full options.
+    </description>
+    <summary>Portable GitHub Copilot agents, skills, instructions, and prompts as a NuGet package.</summary>
+    <releaseNotes>
+      1.0.0 - Initial release. 8 agents, 15 skills, 7 instructions, 26 prompts, workflow docs,
+      ai-team-orchestration plugin. Parameterized azure-boards org. Non-destructive installer
+      with user/repo targets, VS Code prompt sync, subagent setting, and manifest-based uninstall.
+    </releaseNotes>
+    <copyright>Copyright vdkapoor 2026</copyright>
+    <license type="expression">MIT</license>
+    <readme>README.md</readme>
+    <tags>copilot agents skills instructions prompts github vscode ai workflow</tags>
+    <repository type="git" url="https://github.com/vdkapoor/agent-skillset" />
+    <developmentDependency>true</developmentDependency>
+    <packageType>
+      <name>MSBuildPSProject</name>
+    </packageType>
+  </metadata>
+  <files>
+    <file src="skillset\**\*" target="skillset" />
+    <file src="build\install.ps1" target="build" />
+    <file src="build\AgentSkillset.props" target="build" />
+    <file src="build\AgentSkillset.targets" target="build" />
+    <file src="README.md" target="README.md" />
+    <file src="LICENSE" target="LICENSE" />
+    <file src="VERSION" target="VERSION" />
+  </files>
+</package>

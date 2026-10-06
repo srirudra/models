@@ -1,0 +1,25 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local CHR configuration may contain a credentialRef; never commit real config
+# (the real config lives in %LOCALAPPDATA%\CHR, outside this repo, but guard anyway)
+config.json
+**/CHR/config.json
+
+# Ephemeral interception CA material (public cert is written to the OS temp dir,
+# private keys stay in memory; guard against any stray copies)
+*.pem
+ca-*.pem
+
+# Capture / telemetry logs: these contain real prompt and response CONTENT and
+# redacted-but-sensitive GitHub request metadata. Keep them local, not in git.
+**/capture/
+**/otel/
+*.jsonl
+spike*/proxy-start.txt
+spike*/*-log.jsonl
+
+# OS / editor noise
+Thumbs.db
+.DS_Store

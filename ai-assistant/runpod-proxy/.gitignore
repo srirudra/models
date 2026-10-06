@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+certs/
+.pytest_cache/
+demo/mock-upstream.log
